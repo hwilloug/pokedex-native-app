@@ -45,10 +45,7 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: "#F7EDE2",
         },
-        headerStyle: {
-          backgroundColor: "#F7EDE2",
-        },
-        headerTintColor: "#f28482",
+        headerShown: false,
       }}
     >
       {routes.map((route) => (
