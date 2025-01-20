@@ -6,6 +6,7 @@ import { storeData } from "./server/storage/useStorage";
 import { StorageKeys } from "./utils/storage-enums";
 import { versions } from "./utils/versions";
 import { useQueryClient } from "@tanstack/react-query";
+import BackButton from "./components/BackButton";
 
 
 export default function VersionSelection() {
@@ -20,11 +21,7 @@ export default function VersionSelection() {
     return (
         <View className="bg-primaryLight h-screen pt-24 px-8">
             <View className="flex flex-row gap-4 items-center mb-4">
-                <Link href=".." >
-                    <View className="bg-secondary rounded-full w-10 h-10 flex items-center justify-center">
-                        <AntDesign name="back" size={18} color="black" />
-                    </View>
-                </Link>
+                <BackButton />
                 <Text className="text-primary text-2xl font-bold">Version Selection</Text>
             </View>
             <FlatList

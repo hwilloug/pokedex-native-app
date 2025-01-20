@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
+import BaseView from "../components/BaseView";
 
 
 export default function AboutScreen() {
   return (
-    <View>
-    </View>
+    <BaseView>
+      <Text>About</Text>
+    </BaseView>
   )
 }

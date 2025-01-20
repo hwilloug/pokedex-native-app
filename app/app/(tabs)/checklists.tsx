@@ -1,9 +1,11 @@
 import React from "react";
-import { View } from "react-native";
+import { Text} from "react-native";
+import BaseView from "../components/BaseView";
 
 export default function ChecklistsScreen() {
   return (
-    <View>
-    </View>
+    <BaseView>
+      <Text>Checklists</Text>
+    </BaseView>
   )
 }

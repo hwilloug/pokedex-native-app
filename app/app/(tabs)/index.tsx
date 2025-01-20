@@ -6,6 +6,8 @@ import { StorageKeys } from "../utils/storage-enums";
 import { versions } from "../utils/versions";
 import usePokedex from "../server/api/usePokedex";
 import { capitalize } from "../utils/capitalize";
+import PokemonListItem from "../components/PokemonListItem";
+import BaseView from "../components/BaseView";
 
 export default function Index() {
   const selectedVersion = useGetStorage(StorageKeys.VERSION) ?? "1";
@@ -14,8 +16,8 @@ export default function Index() {
   const { data: pokedexes } = usePokedex(version.pokedex);
   
   return (
-    <View className="bg-primaryLight h-screen py-24 px-8">
-      <View className="flex flex-row justify-between items-center">
+    <BaseView>
+      <View className="flex flex-row justify-between items-center mb-4">
         <Text className="text-primary text-2xl font-bold">Pokédex</Text>
         <Link href="/version-selection">
           <View className="bg-secondary rounded-full w-10 h-10 flex items-center justify-center">
@@ -25,9 +27,9 @@ export default function Index() {
       </View>
       <FlatList
         data={pokedexes?.pokemon_entries}
-        renderItem={({ item }) => <Pressable className="bg-secondaryLight flex items-center justify-center p-4 border-b-2 border-primaryLight" onPress={() => {}}><Text className="text-lg">{capitalize(item.pokemon_species.name)}</Text></Pressable>}
+        renderItem={({ item }) => <PokemonListItem pokemon={item} />}
         keyExtractor={(item) => item.entry_number.toString()}
       />
-    </View>
+    </BaseView>
   );
 }
