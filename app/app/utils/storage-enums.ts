@@ -1,5 +1,6 @@
 
 
 export enum StorageKeys {
-    VERSION = "version"
+    VERSION = "version",
+    FILTERS = "filters"
 }

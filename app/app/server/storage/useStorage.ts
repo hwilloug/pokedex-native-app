@@ -18,6 +18,14 @@ export const readData = async (key: string) => {
   }
 };
 
+export const deleteData = async (key: string) => {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (e) {
+    // saving error
+  }
+};
+
 export function useGetStorage(key: string) {
     const { data } = useQuery({
         queryKey: ["storage", key],
