@@ -16,6 +16,7 @@ export default function RootLayout() {
         <Stack.Screen name="pokemon/[name]/(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="abilities/[ability]" options={{ headerShown: false }} />
         <Stack.Screen name="filter" options={{ headerShown: false }} />
+        <Stack.Screen name="create-edit-party/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </QueryClientProvider>

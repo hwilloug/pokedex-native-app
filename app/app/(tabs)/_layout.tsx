@@ -29,6 +29,13 @@ export default function TabLayout() {
       )
     },
     {
+      name: "reference",
+      title: "Reference",
+      icon: ({ color, size, focused }: { color: string, size: number, focused: boolean }) => (
+        <MaterialCommunityIcons name="book-open-page-variant" size={size} color={color} />
+      )
+    },
+    {
       name: "about",
       title: "About",
       icon: ({ color, size, focused }: { color: string, size: number, focused: boolean }) => (
