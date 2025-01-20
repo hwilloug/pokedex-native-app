@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList, Pressable } from "react-native";
+import { View, Text, FlatList, Pressable, ScrollView } from "react-native";
 import BaseView from "../components/BaseView";
 import { router, useLocalSearchParams } from "expo-router";
 import { capitalize } from "../utils/capitalize";
@@ -24,22 +24,22 @@ export default function Ability() {
   })
 
   return <BaseView>
-    <BackButton />
-    
-    <Text className="text-primary text-2xl font-bold">Ability</Text>
-    <Text className="mt-4 text-2xl">{capitalize(abilityValue)}</Text>
+    <BackButton className="mx-4 mb-4" />
+    <ScrollView className="px-8 mb-12 h-screen">
+      <Text className="text-primary text-2xl font-bold">Ability</Text>
+      <Text className="mt-4 text-2xl">{capitalize(abilityValue)}</Text>
 
-    <Text className="text-primary font-bold mt-8">Flavor Text</Text>
-    <Text className="mt-2">{flavor_text?.flavor_text}</Text>
+    <Text className="mt-4">{flavor_text?.flavor_text}</Text>
 
     <Text className="text-primary font-bold mt-8">Effect</Text>
     <Text className="mt-2">{effect?.effect}</Text>
 
     <Text className="text-primary font-bold mt-8 mb-2">Pokémon</Text>
-    <FlatList
-      data={pokemon}
-      renderItem={({ item }) => <Pressable onPress={() => router.push(`/pokemon/${item.name}`)}><PokemonListItem pokemon={item.name} /></Pressable>}
-      keyExtractor={(item) => item.name}
-    />
+    {pokemon?.map((item: any) => (
+      <Pressable key={item.name} onPress={() => router.push(`/pokemon/${item.name}`)}>
+        <PokemonListItem pokemon={item.name} />
+      </Pressable>
+    ))}
+    </ScrollView>
   </BaseView>
 }

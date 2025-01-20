@@ -17,7 +17,7 @@ export default function Index() {
   
   return (
     <BaseView>
-      <View className="flex flex-row justify-between items-center mb-4">
+      <View className="flex flex-row justify-between items-center mb-4 mx-4">
         <Text className="text-primary text-2xl font-bold">Pokédex</Text>
         <Link href="/version-selection">
           <View className="bg-secondary rounded-full w-10 h-10 flex items-center justify-center">
@@ -25,6 +25,7 @@ export default function Index() {
           </View>
         </Link>
       </View>
+
       <FlatList
         data={pokedexes?.pokemon_entries}
         renderItem={({ item }) => <PokemonListItem pokemon={item} />}

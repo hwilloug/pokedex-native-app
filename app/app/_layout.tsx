@@ -13,7 +13,7 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="version-selection" options={{ headerShown: false }} />
-        <Stack.Screen name="pokemon/[name]" options={{ headerShown: false }} />
+        <Stack.Screen name="pokemon/[name]/(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="abilities/[ability]" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>

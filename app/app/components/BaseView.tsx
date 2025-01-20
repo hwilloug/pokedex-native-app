@@ -1,10 +1,15 @@
 
 
 import React from "react";
-import { View } from "react-native";
+import { View, ScrollView, SafeAreaView } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function BaseView({ children }: { children: React.ReactNode }) {
-    return <View className="bg-primaryLight h-screen pt-24 pb-8 px-8">
-        {children}
-    </View>
+    return (
+        <SafeAreaProvider>
+            <SafeAreaView className="bg-primaryLight">
+                {children}
+            </SafeAreaView>
+        </SafeAreaProvider>
+    )
 }

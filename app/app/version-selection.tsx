@@ -26,7 +26,7 @@ export default function VersionSelection() {
             </View>
             <FlatList
                 data={versions.reverse()}
-                renderItem={({ item }) => <Pressable className="bg-secondaryLight rounded-lg flex items-center justify-center p-4" onPress={() => handleVersionPress(item.id)}><Text className="text-lg font-bold">{item.name}</Text></Pressable> }
+                renderItem={({ item }) => <Pressable className="bg-secondaryLight rounded-lg flex items-center justify-center p-4" onPress={() => handleVersionPress(item.id ?? 0)}><Text className="text-lg font-bold">{item.name}</Text></Pressable> }
                 keyExtractor={(item) => item.id.toString()}
                 ItemSeparatorComponent={() => <View className="h-4" />}
             />
