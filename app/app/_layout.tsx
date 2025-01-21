@@ -12,7 +12,6 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="version-selection" options={{ headerShown: false }} />
         <Stack.Screen name="pokemon/[name]/(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="abilities/[ability]" options={{ headerShown: false }} />
         <Stack.Screen name="filter" options={{ headerShown: false }} />

@@ -10,6 +10,7 @@ import BaseView from "../components/BaseView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { capitalize } from "../utils/capitalize";
 import { useQueryClient, useQueries } from "@tanstack/react-query";
+import VersionSelection from "../components/VersionSelection";
 
 export default function Index() {
   const queryClient = useQueryClient();
@@ -20,6 +21,7 @@ export default function Index() {
   const version = versions.find((version) => version.id === Number(selectedVersion)) ?? versions[0];
   
   const [searchText, setSearchText] = useState("");
+  const [isVersionSelectionOpen, setIsVersionSelectionOpen] = useState(false);
 
   const { data: pokedexes } = usePokedex(version.pokedex);
 
@@ -33,16 +35,22 @@ export default function Index() {
       return matchesSearch;
     });
   }, [pokedexes, searchText]);
+
+  const handleVersionPress = async (id: number) => {
+    await storeData(StorageKeys.VERSION, id.toString());
+    queryClient.invalidateQueries({ queryKey: ["storage", StorageKeys.VERSION] });
+    setIsVersionSelectionOpen(false);
+  }
   
   return (
     <BaseView>
       <View className="flex flex-row justify-between items-center mb-4 mx-4">
         <Text className="text-primary text-2xl font-bold">Pokédex</Text>
-        <Link href="/version-selection">
+        <Pressable onPress={() => setIsVersionSelectionOpen(true)}>
           <View className="bg-secondary rounded-full w-10 h-10 flex items-center justify-center">
             <Text className="text-primary text-2xl font-bold">{version?.name}</Text>
           </View>
-        </Link>
+        </Pressable>
       </View>
 
       <View className="px-4 mb-4">
@@ -122,6 +130,8 @@ export default function Index() {
         renderItem={({ item }) => <PokemonListItem pokemon={item} />}
         keyExtractor={(item) => item.entry_number.toString()}
       />
+
+      <VersionSelection isVisible={isVersionSelectionOpen} handleVersionPress={handleVersionPress} onClose={() => setIsVersionSelectionOpen(false)} />
     </BaseView>
   );
 }
