@@ -34,10 +34,6 @@ export default function CreateEditParty() {
     setIsVersionSelectionOpen(false);
   }
 
-  const handleNewPokemon = (pokemon: any) => {
-    console.log(pokemon);
-  }
-
   return (
     <BaseView>
       <View className="mt-8 ml-8 flex-row items-center gap-4">
@@ -52,15 +48,20 @@ export default function CreateEditParty() {
         </View>
       </View>
       <View className="m-8">
-        <PartyForm party={party} version={selectedVersionName ?? "national"} handleNewPokemon={handleNewPokemon} />
+        <PartyForm party={party} version={selectedVersionName ?? "national"} />
       </View>
       <VersionSelection isVisible={isVersionSelectionOpen} handleVersionPress={handleVersionPress} onClose={() => setIsVersionSelectionOpen(false)} />
     </BaseView>
   )
 }
 
-const PartyForm = ({ party, version, handleNewPokemon }: { party: any, version: string, handleNewPokemon: (pokemon: any) => void }) => {
+const PartyForm = ({ party, version }: { party: any, version: string }) => {
   const [isNewPokemonFormOpen, setIsNewPokemonFormOpen] = useState(false);
+
+  const handleNewPokemon = (pokemon: any) => {
+    setIsNewPokemonFormOpen(false);
+
+  }
 
   return (
     <View>
@@ -71,10 +72,16 @@ const PartyForm = ({ party, version, handleNewPokemon }: { party: any, version: 
           <AntDesign key={i} name="pluscircleo" size={42} color="gray" onPress={() => setIsNewPokemonFormOpen(true)} />
         ))}
       </View>
+
+      {party.pokemon.map((pokemon: any) => (
+        <PokemonListItem key={pokemon.id} pokemon={pokemon} onPress={() => {}} />
+      ))}
+
+
       <Modal visible={isNewPokemonFormOpen} onRequestClose={() => setIsNewPokemonFormOpen(false)} animationType="slide">
         <SafeAreaView className="bg-primaryLight rounded-lg p-4 h-full">
           <View className="flex-row justify-between mb-4">
-            <Text className="text-2xl font-bold text-primary ml-8">New Pokemon</Text>
+            <Text className="text-2xl font-bold text-primary ml-8">Add Pokemon</Text>
             <Pressable onPress={() => setIsNewPokemonFormOpen(false)} className="w-fit mr-8">
               <AntDesign name="closesquare" size={24} color="#f28482" />
             </Pressable>
@@ -97,7 +104,7 @@ const NewPokemonForm = ({ version, handleNewPokemon }: { version: string, handle
     <View>
       <FlatList
         data={pokemon}
-        renderItem={({ item }) => <PokemonListItem pokemon={item} />}
+        renderItem={({ item }) => <PokemonListItem pokemon={item} onPress={() => handleNewPokemon(item)} />}
         keyExtractor={(item) => item}
       />
     </View>

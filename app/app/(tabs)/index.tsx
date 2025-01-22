@@ -127,7 +127,7 @@ export default function Index() {
 
       <FlatList
         data={filteredPokemon}
-        renderItem={({ item }) => <PokemonListItem pokemon={item} />}
+        renderItem={({ item }) => <PokemonListItem pokemon={item} onPress={() => router.push(`/pokemon/${item.pokemon_species.name}`)} />}
         keyExtractor={(item) => item.entry_number.toString()}
       />
 
