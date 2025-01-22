@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, Modal, Pressable, SafeAreaView, Text, View } from "react-native";
 import BaseView from "../components/BaseView";
-import { useGetParty } from "../server/storage/useParties";
-import { useLocalSearchParams } from "expo-router";
+import { useCreateParties, useGetParty, useUpdateParties } from "../server/storage/useParties";
+import { router, useLocalSearchParams } from "expo-router";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import BackButton from "../components/BackButton";
 import { StorageKeys } from "../utils/storage-enums";
@@ -11,25 +11,29 @@ import VersionSelection from "../components/VersionSelection";
 import usePokedex from "../server/api/usePokedex";
 import { versions } from "../utils/versions";
 import PokemonListItem from "../components/PokemonListItem";
+import PokemonSpriteIcon from "../components/PokemonSpriteIcon";
+import PartyPokemonSprites from "../components/PartyPokemonSprites";
 
 
 export default function CreateEditParty() {
   const { id } = useLocalSearchParams();
   const { party } = useGetParty(id as string);
+  const { mutate: updateParty } = useUpdateParties(id as string);
   const savedVersion = useGetStorage(StorageKeys.VERSION);
 
-  const [selectedVersion, setSelectedVersion] = useState<string | null>(savedVersion);
+  const [selectedVersion, setSelectedVersion] = useState<string | null>(party?.version || savedVersion);
   const [isVersionSelectionOpen, setIsVersionSelectionOpen] = useState(false);
 
   useEffect(() => {
-    setSelectedVersion(savedVersion);
-  }, [savedVersion]);
+    setSelectedVersion(party?.version || savedVersion);
+  }, [savedVersion, party?.version]);
 
   const selectedVersionName = useMemo(() => {
     return versions.find((version) => version.id === parseInt(selectedVersion ?? ""))?.pokedex;
   }, [selectedVersion]);
 
   const handleVersionPress = async (id: number) => {
+    updateParty({ version: id.toString() });
     setSelectedVersion(id.toString());
     setIsVersionSelectionOpen(false);
   }
@@ -56,26 +60,45 @@ export default function CreateEditParty() {
 }
 
 const PartyForm = ({ party, version }: { party: any, version: string }) => {
+  const { mutate: createParty } = useCreateParties();
+  const { mutate: updateParty } = useUpdateParties(party?.id);
   const [isNewPokemonFormOpen, setIsNewPokemonFormOpen] = useState(false);
+  
+  const versionId = useMemo(() => {
+    return versions.find((v) => v.pokedex === version)?.id;
+  }, [version]);
 
   const handleNewPokemon = (pokemon: any) => {
     setIsNewPokemonFormOpen(false);
-
+    if (party?.id) {
+      updateParty({ ...party, pokemon: [...party.pokemon, { name: pokemon }] });
+    } else {
+      const id = createParty({ ...party, pokemon: [...(party?.pokemon ?? []), { name: pokemon }], version: versionId });
+      router.replace(`/create-edit-party/${id}`);
+    }
   }
 
   return (
     <View>
       <Text className="text-4xl font-bold text-accent mb-4">{party?.name || "Unnamed"}</Text>
       <Text className="text-lg text-primary">{party?.description}</Text>
-      <View className="flex-row items-center justify-between">
-        {[...Array(6)].map((_, i) => (
-          <AntDesign key={i} name="pluscircleo" size={42} color="gray" onPress={() => setIsNewPokemonFormOpen(true)} />
-        ))}
+      <PartyPokemonSprites pokemonTeam={party?.pokemon} />
+      <View className="flex-row items-center justify-between mt-4">
+        {[...Array(6)].map((_, i) => {
+          if (party?.pokemon.length > i) {
+            return <PokemonSpriteIcon key={i} pokemon={party.pokemon[i].name} />
+          }
+          return <AntDesign key={i} name="pluscircleo" size={42} color="gray" onPress={() => setIsNewPokemonFormOpen(true)} />
+        })}
       </View>
 
-      {party.pokemon.map((pokemon: any) => (
-        <PokemonListItem key={pokemon.id} pokemon={pokemon} onPress={() => {}} />
-      ))}
+      <View className="mt-8">
+        {party?.pokemon.map((pokemon: any) => (
+          <View key={pokemon.name}>
+            <PokemonListItem pokemon={pokemon.name} onPress={() => {}} />
+          </View>
+        ))}
+      </View>
 
 
       <Modal visible={isNewPokemonFormOpen} onRequestClose={() => setIsNewPokemonFormOpen(false)} animationType="slide">
@@ -104,8 +127,8 @@ const NewPokemonForm = ({ version, handleNewPokemon }: { version: string, handle
     <View>
       <FlatList
         data={pokemon}
-        renderItem={({ item }) => <PokemonListItem pokemon={item} onPress={() => handleNewPokemon(item)} />}
-        keyExtractor={(item) => item}
+        renderItem={({ item }) => <PokemonListItem key={item.name} pokemon={item} onPress={() => handleNewPokemon(item)} />}
+        keyExtractor={(item) => item.name}
       />
     </View>
   )

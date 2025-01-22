@@ -12,6 +12,7 @@ import { capitalize } from "../utils/capitalize";
 import { useQueryClient, useQueries } from "@tanstack/react-query";
 import VersionSelection from "../components/VersionSelection";
 
+
 export default function Index() {
   const queryClient = useQueryClient();
 

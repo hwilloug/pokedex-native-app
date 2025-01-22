@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import BaseView from "../components/BaseView";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useGetParties } from "../server/storage/useParties";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 
 
 export default function PartiesScreen() {
@@ -25,13 +25,15 @@ export default function PartiesScreen() {
         </Pressable>
       </View>
       <ScrollView>
-        {parties.length > 0 && parties.map((party: string) => (
-          <View key={party}>
-            <Text>{party}</Text>
+        {parties.length > 0 && parties.map((party: any) => (
+          <View key={party.id}>
+            <Link href={`/create-edit-party/${party.id}`}>
+              <Text>{party.pokemon.length} Pokemon</Text>
+            </Link>
           </View>
         ))}
         {
-          parties.length === 0 || parties.length === undefined && (
+          parties.length === 0 && (
             <View className="flex-col justify-center items-center mt-10">
               <View className="flex-row justify-center items-center">
                 <Text className="text-lg text-primary">No parties found</Text>

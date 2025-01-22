@@ -33,5 +33,5 @@ export function useGetStorage(key: string) {
         staleTime: 0,
         gcTime: 0
     });
-    return data ?? null;
+    return data ?? undefined;
 }
