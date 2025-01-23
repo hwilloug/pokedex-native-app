@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FlatList, Modal, Pressable, SafeAreaView, Text, View } from "react-native";
+import { FlatList, Modal, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import BaseView from "../components/BaseView";
 import { useCreateParties, useGetParty, useUpdateParties } from "../server/storage/useParties";
 import { router, useLocalSearchParams } from "expo-router";
@@ -13,6 +13,7 @@ import { versions } from "../utils/versions";
 import PokemonListItem from "../components/PokemonListItem";
 import PokemonSpriteIcon from "../components/PokemonSpriteIcon";
 import PartyPokemonSprites from "../components/PartyPokemonSprites";
+import PartyPokemonView from "../components/PartyPokemonView";
 
 
 export default function CreateEditParty() {
@@ -40,20 +41,22 @@ export default function CreateEditParty() {
 
   return (
     <BaseView>
-      <View className="mt-8 ml-8 flex-row items-center gap-4">
-        <BackButton />
-        <Text className="text-2xl font-bold text-primary">{id === "new" ? "Create Party" : "Edit Party"}</Text>
-        <View className="flex-1 flex-row justify-end mr-8">
+      <ScrollView>
+        <View className="mt-8 ml-8 flex-row items-center gap-4">
+          <BackButton />
+          <Text className="text-2xl font-bold text-primary">{id === "new" ? "Create Party" : ""}</Text>
+          <View className="flex-1 flex-row justify-end mr-8">
             <Pressable onPress={() => setIsVersionSelectionOpen(true)}>
               <View className="bg-secondary rounded-full w-10 h-10 flex items-center justify-center">
                 <Text className="text-primary text-2xl font-bold">{selectedVersion}</Text>
               </View>
             </Pressable>
+          </View>
         </View>
-      </View>
-      <View className="m-8">
-        <PartyForm party={party} version={selectedVersionName ?? "national"} />
-      </View>
+        <View className="m-8">
+          <PartyForm party={party} version={selectedVersionName ?? "national"} />
+        </View>
+      </ScrollView>
       <VersionSelection isVisible={isVersionSelectionOpen} handleVersionPress={handleVersionPress} onClose={() => setIsVersionSelectionOpen(false)} />
     </BaseView>
   )
@@ -82,7 +85,9 @@ const PartyForm = ({ party, version }: { party: any, version: string }) => {
     <View>
       <Text className="text-4xl font-bold text-accent mb-4">{party?.name || "Unnamed"}</Text>
       <Text className="text-lg text-primary">{party?.description}</Text>
+
       <PartyPokemonSprites pokemonTeam={party?.pokemon} />
+
       <View className="flex-row items-center justify-between mt-4">
         {[...Array(6)].map((_, i) => {
           if (party?.pokemon.length > i) {
@@ -95,7 +100,7 @@ const PartyForm = ({ party, version }: { party: any, version: string }) => {
       <View className="mt-8">
         {party?.pokemon.map((pokemon: any) => (
           <View key={pokemon.name}>
-            <PokemonListItem pokemon={pokemon.name} onPress={() => {}} />
+            <PartyPokemonView pokemon={pokemon} />
           </View>
         ))}
       </View>
