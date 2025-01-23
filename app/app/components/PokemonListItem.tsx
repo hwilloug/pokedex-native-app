@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text, Image, View } from "react-native"
 import { capitalize } from "../utils/capitalize";
-import usePokemon from "../server/api/usePokemon";
+import usePokemon from "../server/hooks/usePokemon";
 import { router } from "expo-router";
 import TypePill from "./TypePill";
 

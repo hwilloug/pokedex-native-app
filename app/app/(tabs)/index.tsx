@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { FlatList, Pressable, Text, View, TextInput } from "react-native";
 import { Link, router } from "expo-router";
-import { storeData, useGetStorage } from "../server/storage/useStorage";
+import { storeData, useGetStorage } from "../server/storage-hooks/useStorage";
 import { StorageKeys } from "../utils/storage-enums";
 import { versions } from "../utils/versions";
-import usePokedex from "../server/api/usePokedex";
+import usePokedex from "../server/hooks/usePokedex";
 import PokemonListItem from "../components/PokemonListItem";
 import BaseView from "../components/BaseView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';

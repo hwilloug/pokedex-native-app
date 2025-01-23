@@ -2,7 +2,7 @@ import { StorageKeys } from "@/app/utils/storage-enums";
 import { storeData, useGetStorage, readData } from "./useStorage";
 import 'react-native-get-random-values';
 import { v4 as uuid } from "uuid";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useGetParties = () => {
     const parties = useGetStorage(StorageKeys.PARTIES);

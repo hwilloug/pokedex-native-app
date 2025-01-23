@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import BaseView from "../components/BaseView";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useGetParties } from "../server/storage/useParties";
+import { useGetParties } from "../server/storage-hooks/useParties";
 import { Link, router } from "expo-router";
 
 

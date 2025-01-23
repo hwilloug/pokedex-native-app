@@ -3,7 +3,7 @@ import { View, Text, FlatList, Pressable, ScrollView } from "react-native";
 import BaseView from "../components/BaseView";
 import { router, useLocalSearchParams } from "expo-router";
 import { capitalize } from "../utils/capitalize";
-import useAbility from "../server/api/useAbility";
+import useAbility from "../server/hooks/useAbility";
 import PokemonListItem from "../components/PokemonListItem";
 import BackButton from "../components/BackButton";
 

@@ -1,14 +1,13 @@
 import React, { useEffect, useMemo } from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
 import BaseView from "./components/BaseView";
-import useTypes from "./server/api/useTypes";
+import useTypes from "./server/hooks/useTypes";
 import TypePill from "./components/TypePill";
-import { router } from "expo-router";
-import useGenerations from "./server/api/useGenerations";
+import useGenerations from "./server/hooks/useGenerations";
 import { capitalize } from "./utils/capitalize";
-import useEggGroups from "./server/api/useEggGroups";
+import useEggGroups from "./server/hooks/useEggGroups";
 import BackButton from "./components/BackButton";
-import { deleteData, storeData, useGetStorage } from "./server/storage/useStorage";
+import { deleteData, storeData, useGetStorage } from "./server/storage-hooks/useStorage";
 import { StorageKeys } from "./utils/storage-enums";
 import { useQueryClient } from "@tanstack/react-query";
 
