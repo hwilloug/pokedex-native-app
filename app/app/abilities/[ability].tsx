@@ -36,9 +36,7 @@ export default function Ability() {
 
     <Text className="text-primary font-bold mt-8 mb-2">Pokémon</Text>
     {pokemon?.map((item: any) => (
-      <Pressable key={item.name} onPress={() => router.push(`/pokemon/${item.name}`)}>
-        <PokemonListItem pokemon={item.name} />
-      </Pressable>
+        <PokemonListItem key={item.name} pokemon={item.name} onPress={() => router.push(`/pokemon/${item.name}`)} />
     ))}
     </ScrollView>
   </BaseView>
