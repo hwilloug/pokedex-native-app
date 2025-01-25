@@ -2,9 +2,9 @@ import BackButton from "@/app/components/BackButton";
 import BaseView from "@/app/components/BaseView";
 import React from "react";
 import { View, Text, ScrollView } from "react-native";
-import useEvolutions, { useGetEvolutionDetail } from "@/app/server/api/useEvolutions";
+import useEvolutions, { useGetEvolutionDetail } from "@/app/server/hooks/useEvolutions";
 import { useGlobalSearchParams } from "expo-router";
-import usePokemonSpecies from "@/app/server/api/usePokemonSpecies";
+import usePokemonSpecies from "@/app/server/hooks/usePokemonSpecies";
 import { capitalize } from "@/app/utils/capitalize";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 

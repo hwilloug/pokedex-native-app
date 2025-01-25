@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, Image, Pressable, ScrollView } from "react-native";
-import usePokemon from "../../../server/api/usePokemon";
+import usePokemon from "../../../server/hooks/usePokemon";
 import { router, useLocalSearchParams } from "expo-router";
 import { capitalize } from "../../../utils/capitalize";
-import useAbility from "../../../server/api/useAbility";
+import useAbility from "../../../server/hooks/useAbility";
 import BaseView from "../../../components/BaseView";
 import BackButton from "../../../components/BackButton";
 import TypePill from "../../../components/TypePill";
 import StatBar from "../../../components/StatBar";
-import usePokemonSpecies from "../../../server/api/usePokemonSpecies";
+import usePokemonSpecies from "../../../server/hooks/usePokemonSpecies";
 
 
 export default function PokemonNamePage() {

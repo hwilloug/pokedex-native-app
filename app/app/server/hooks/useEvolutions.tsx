@@ -12,7 +12,6 @@ export default function useEvolutions(id: string) {
 
 export function useGetEvolutionDetail(chain: any): string | number | undefined {
   const evolution_type = chain?.evolution_details[0]?.trigger?.name;
-  console.log(evolution_type);
   switch (evolution_type) {
     case "level-up":
       return chain?.evolution_details[0]?.min_level;
